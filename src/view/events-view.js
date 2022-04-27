@@ -2,13 +2,11 @@ import {
   createElement
 } from '../render.js';
 
-const createEditorFormTemplate = () => `
+const createTripEventsTemplate = () => '<section class="trip-events"></section>';
 
-`;
-
-export default class EditorForm {
+export default class FilterView {
   getTemplate() {
-    return createEditorFormTemplate();
+    return createTripEventsTemplate();
   }
 
   getElement() {

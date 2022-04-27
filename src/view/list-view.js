@@ -2,13 +2,11 @@ import {
   createElement
 } from '../render.js';
 
-const createEditorFormTemplate = () => `
+const createListTemplate = () => '<ul class="trip-events__list"></ul>';
 
-`;
-
-export default class EditorForm {
+export default class FilterView {
   getTemplate() {
-    return createEditorFormTemplate();
+    return createListTemplate();
   }
 
   getElement() {
