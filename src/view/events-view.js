@@ -4,7 +4,7 @@ import {
 
 const createTripEventsTemplate = () => '<section class="trip-events"></section>';
 
-export default class FilterView {
+export default class EventsView {
   getTemplate() {
     return createTripEventsTemplate();
   }

@@ -12,15 +12,17 @@ export default class ListPresenter {
   listComponent = new ListView();
 
 
-  init = (listContainer) => {
+  init = (listContainer, pointModel) => {
     this.listContainer = listContainer;
+    this.pointModel = pointModel;
+    this.listPoints = [...this.pointModel.getPoints()];
 
     render(this.eventsComponent, this.listContainer);
     render(new SortView(), this.eventsComponent.getElement());
     render(this.listComponent, this.eventsComponent.getElement());
 
-    for (let i = 0; i < 3; i++) {
-      render(new ItemView(), this.listComponent.getElement());
+    for (let i = 0; i < this.listPoints.length; i++) {
+      render(new ItemView(this.listPoints[i]), this.listComponent.getElement());
     }
   };
 }
