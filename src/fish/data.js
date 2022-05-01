@@ -1,13 +1,40 @@
+import {
+  getRandomInteger
+} from './random.js';
+
+const generateDestinations = () => {
+  const destinations = ['London', 'Paris', 'Grenoble', 'Geneva', 'Vienna', 'Venice', 'Florence', 'Genoa', 'Rome'];
+  const randomIndex = getRandomInteger(0, destinations.length - 1);
+  return destinations[randomIndex];
+};
+
+const generateIndex = () => {
+  const randomIndex = getRandomInteger(0, 1);
+  return randomIndex;
+};
+
 const types = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
-const destinations = ['London', 'Paris', 'Grenoble', 'Geneva', 'Vienna', 'Venice', 'Florence', 'Genoa', 'Rome'];
-const descriptions = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Fusce tristique felis at fermentum pharetra. In rutrum ac purus sit amet tempus.',
-  'Aliquam id orci ut lectus varius viverra. Nunc fermentum tortor ac porta dapibus.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-  'Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat.',
-  'Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.',
-];
+
+const offers = {
+  'type': 'taxi',
+  'offers': [{
+    'id': 1,
+    'title': 'Upgrade to a business class',
+    'price': 120
+  }, {
+    'id': 2,
+    'title': 'Choose the radio station',
+    'price': 60
+  }]
+};
+
+export const generatePoint = () => ({
+  'base_price': 1100,
+  'date_from': '2019-07-10T22:55:56.845Z',
+  'date_to': '2019-07-11T11:22:13.375Z',
+  'destination': generateDestinations(),
+  'id': '0',
+  'is_favorite': false,
+  'offers': offers.offers[generateIndex()].title,
+  'type': types[getRandomInteger(0, 8)]
+});

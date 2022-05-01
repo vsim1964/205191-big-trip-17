@@ -1,6 +1,6 @@
 import {
   generatePoint
-} from '../fish/point.js';
+} from '../fish/data.js';
 
 export default class PointsModel {
   points = Array.from({
