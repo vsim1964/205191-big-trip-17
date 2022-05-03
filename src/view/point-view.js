@@ -2,19 +2,17 @@ import {
   createElement
 } from '../render.js';
 
-
 const createPointTemplate = (point) => {
   const {
     date,
-    base_price,
+    basePrice,
     price,
-    date_from,
-    date_to,
-    between,
+    dateFrom,
+    dateTo,
     type,
     destination,
     offers,
-    is_favorite,
+    isFavorite,
     diffTime
   } = point;
 
@@ -28,14 +26,14 @@ const createPointTemplate = (point) => {
   <h3 class="event__title">${type} ${destination}</h3>
   <div class="event__schedule">
 	 <p class="event__time">
-		<time class="event__start-time" datetime="2019-03-18T10:30">${date_from}</time>
+		<time class="event__start-time" datetime="2019-03-18T10:30">${dateFrom}</time>
 		&mdash;
-		<time class="event__end-time" datetime="2019-03-18T11:00">${date_to}</time>
+		<time class="event__end-time" datetime="2019-03-18T11:00">${dateTo}</time>
 	 </p>
 	 <p class="event__duration">${diffTime}</p>
   </div>
   <p class="event__price">
-	 &euro;&nbsp;<span class="event__price-value">${base_price}</span>
+	 &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
   </p>
   <h4 class="visually-hidden">Offers:</h4>
   <ul class="event__selected-offers">
@@ -45,7 +43,7 @@ const createPointTemplate = (point) => {
 		<span class="event__offer-price">${price}</span>
 	 </li>
   </ul>
-  <button class="event__favorite-btn ${is_favorite}" type="button">
+  <button class="event__favorite-btn ${isFavorite}" type="button">
 	 <span class="visually-hidden">Add to favorite</span>
 	 <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
 		<path

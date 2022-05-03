@@ -15,32 +15,29 @@ import {
 // } from './points.js';
 
 import {
-  arrayOffers
+  ARRAY_OFFERS
 } from './offers.js';
 
-const datesFrom = ['2019-07-10T22:55:56.845Z', '2019-07-11T23:55:56.845Z', '2019-07-12T20:55:56.845Z', '2019-07-13T19:55:56.845Z', '2019-07-14T18:55:56.845Z', '2019-07-15T17:55:56.845Z', '2019-07-16T16:55:56.845Z', '2019-07-17T15:55:56.845Z', '2019-07-18T06:55:56.845Z'];
-const datesTo = ['2019-07-10T22:55:56.845Z', '2019-07-11T22:55:56.845Z', '2019-07-12T22:55:56.845Z', '2019-07-13T22:55:56.845Z', '2019-07-14T22:55:56.845Z', '2019-07-15T22:55:56.845Z', '2019-07-16T22:55:56.845Z', '2019-07-17T22:55:56.845Z', '2019-07-18T22:55:56.845Z'];
-
-const types = ['Taxi', 'Drive', 'Flight'];
-const destinations = ['London', 'Geneva', 'Rome'];
-const prices = ['80', '100', '200'];
-
-
-const favoriteFalse = '';
-const favoriteTrue = 'event__favorite-btn--active';
-const isFavorites = [favoriteFalse, favoriteTrue];
+const DATES_FROM = ['2019-07-10T22:55:56.845Z', '2019-07-11T23:55:56.845Z', '2019-07-12T20:55:56.845Z'];
+const DATES_TO = ['2019-07-10T22:55:56.845Z', '2019-07-11T22:55:56.845Z', '2019-07-12T22:55:56.845Z'];
+const TYPES = ['Taxi', 'Drive', 'Flight'];
+const DESTINATIONS = ['London', 'Geneva', 'Rome'];
+const PRICES = ['80', '100', '200'];
+const FAVORITE_FALSE = '';
+const FAVORITE_TRUE = 'event__favorite-btn--active';
+const IS_FAVORITES = [FAVORITE_FALSE, FAVORITE_TRUE];
 
 
 export const generatePoint = () => ({
-  'date': humanizeDateDueDate(datesFrom[getRandomInteger(0, datesFrom.length - 1)]),
-  'base_price': prices[getRandomInteger(0, prices.length - 1)],
-  'date_from': humanizeFromDueDate(datesFrom[getRandomInteger(0, datesFrom.length - 1)]),
-  'date_to': humanizeToDueDate(datesTo[getRandomInteger(0, datesTo.length - 1)]),
-  'diffTime': getDiffTime(datesTo[getRandomInteger(0, datesTo.length - 1)], datesFrom[getRandomInteger(0, datesFrom.length - 1)]),
-  'destination': destinations[getRandomInteger(0, destinations.length - 1)],
-  'id': '0',
-  'is_favorite': isFavorites[getRandomInteger(0, 1)],
-  'offers': arrayOffers[getRandomInteger(0, arrayOffers.length - 1)].offers[getRandomInteger(0, 1)].title,
-  'price': arrayOffers[getRandomInteger(0, arrayOffers.length - 1)].offers[getRandomInteger(0, 1)].price,
-  'type': types[getRandomInteger(0, types.length - 1)]
+  date: humanizeDateDueDate(DATES_FROM[getRandomInteger(0, DATES_FROM.length - 1)]),
+  basePrice: PRICES[getRandomInteger(0, PRICES.length - 1)],
+  dateFrom: humanizeFromDueDate(DATES_FROM[getRandomInteger(0, DATES_FROM.length - 1)]),
+  dateTo: humanizeToDueDate(DATES_TO[getRandomInteger(0, DATES_TO.length - 1)]),
+  diffTime: getDiffTime(DATES_TO[getRandomInteger(0, DATES_TO.length - 1)], DATES_FROM[getRandomInteger(0, DATES_FROM.length - 1)]),
+  destination: DESTINATIONS[getRandomInteger(0, DESTINATIONS.length - 1)],
+  id: '0',
+  isFavorite: IS_FAVORITES[getRandomInteger(0, 1)],
+  offers: ARRAY_OFFERS[getRandomInteger(0, ARRAY_OFFERS.length - 1)].offers[getRandomInteger(0, 1)].title,
+  price: ARRAY_OFFERS[getRandomInteger(0, ARRAY_OFFERS.length - 1)].offers[getRandomInteger(0, 1)].price,
+  type: TYPES[getRandomInteger(0, TYPES.length - 1)]
 });

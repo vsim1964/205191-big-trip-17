@@ -1,4 +1,4 @@
-const arrayOffers = [
+const ARRAY_OFFERS = [
 
   {
     'type': 'taxi',
@@ -39,5 +39,5 @@ const arrayOffers = [
 ];
 
 export {
-  arrayOffers
+  ARRAY_OFFERS
 };

@@ -28,7 +28,6 @@ const getDiffTime = (date1, date2) => {
   return DiffTime;
 };
 
-
 export {
   getRandomInteger,
   humanizeDateDueDate,
