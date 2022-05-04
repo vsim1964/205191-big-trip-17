@@ -1,7 +1,4 @@
-import {
-  createElement
-} from '../render.js';
-
+import { createElement } from "../render.js";
 
 const createAddEditTemplate = (point = {}) => {
   const {
@@ -12,11 +9,10 @@ const createAddEditTemplate = (point = {}) => {
     //  id,
     //  isDavorite,
     //  offers,
-    type
+    type,
   } = point;
 
-  return (
-    `
+  return `
 	 <form class="event event--edit" action="#" method="post">
 	 <header class="event__header">
 		<div class="event__type-wrapper">
@@ -176,26 +172,26 @@ const createAddEditTemplate = (point = {}) => {
 		  </div>
 		</section>
 	 </section>
-  </form>`
-  );
+  </form>`;
 };
 
 export default class AddEditView {
+  #element = null;
 
   constructor(point) {
     this.point = point;
   }
 
-  getTemplate() {
+  get template() {
     return createAddEditTemplate(this.point);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {

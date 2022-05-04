@@ -4,7 +4,7 @@ import {
 
 
 export default class AddEditModel {
-  points = defaultPoints;
+  #points = defaultPoints;
 
-  getDefaultPoints = () => this.points;
+  getDefaultPoints = () => this.#points;
 }

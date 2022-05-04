@@ -1,20 +1,25 @@
-import {
-  createElement
-} from '../render.js';
+import { createElement } from "../render.js";
 
-const createEmptyTemplate = () => '<p class="trip-events__msg">Click New Event to create your first point</p>';
+const createEmptyTemplate = () =>
+  '<p class="trip-events__msg">Click New Event to create your first point</p>';
 
 export default class EmptyView {
-  getTemplate() {
-    return createEmptyTemplate();
+  #element = null;
+
+  constructor(point) {
+    this.point = point;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get template() {
+    return createEmptyTemplate(this.point);
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {

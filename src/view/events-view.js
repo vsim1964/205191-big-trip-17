@@ -1,20 +1,25 @@
-import {
-  createElement
-} from '../render.js';
+import { createElement } from "../render.js";
 
-const createTripEventsTemplate = () => '<section class="trip-events"></section>';
+const createTripEventsTemplate = () =>
+  '<section class="trip-events"></section>';
 
 export default class EventsView {
-  getTemplate() {
-    return createTripEventsTemplate();
+  #element = null;
+
+  constructor(point) {
+    this.point = point;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get template() {
+    return createTripEventsTemplate(this.point);
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
