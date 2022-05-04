@@ -10,7 +10,6 @@ const controlsFilters = siteHeaderElement.querySelector('.trip-controls__filters
 
 const siteMainElement = document.querySelector('.page-main');
 const listContainer = siteMainElement.querySelector('.page-body__container');
-// const addEditContainer = siteMainElement.querySelector('.trip-events__item:nth-child(1)');
 
 
 const list = new ListPresenter();
