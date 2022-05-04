@@ -27,17 +27,18 @@ const FAVORITE_FALSE = '';
 const FAVORITE_TRUE = 'event__favorite-btn--active';
 const IS_FAVORITES = [FAVORITE_FALSE, FAVORITE_TRUE];
 
+const getRandom = (array) => array[getRandomInteger(0, array.length - 1)];
+const getRandomElse = (array) => array[getRandomInteger(0, 1)];
 
 export const generatePoint = () => ({
-  date: humanizeDateDueDate(DATES_FROM[getRandomInteger(0, DATES_FROM.length - 1)]),
-  basePrice: PRICES[getRandomInteger(0, PRICES.length - 1)],
-  dateFrom: humanizeFromDueDate(DATES_FROM[getRandomInteger(0, DATES_FROM.length - 1)]),
-  dateTo: humanizeToDueDate(DATES_TO[getRandomInteger(0, DATES_TO.length - 1)]),
-  diffTime: getDiffTime(DATES_TO[getRandomInteger(0, DATES_TO.length - 1)], DATES_FROM[getRandomInteger(0, DATES_FROM.length - 1)]),
-  destination: DESTINATIONS[getRandomInteger(0, DESTINATIONS.length - 1)],
-  id: '0',
-  isFavorite: IS_FAVORITES[getRandomInteger(0, 1)],
-  offers: ARRAY_OFFERS[getRandomInteger(0, ARRAY_OFFERS.length - 1)].offers[getRandomInteger(0, 1)].title,
-  price: ARRAY_OFFERS[getRandomInteger(0, ARRAY_OFFERS.length - 1)].offers[getRandomInteger(0, 1)].price,
-  type: TYPES[getRandomInteger(0, TYPES.length - 1)]
+  date: humanizeDateDueDate(getRandom(DATES_FROM)),
+  dateFrom: humanizeFromDueDate(getRandom(DATES_FROM)),
+  dateTo: humanizeToDueDate(getRandom(DATES_TO)),
+  diffTime: getDiffTime(getRandom(DATES_TO), getRandom(DATES_FROM)),
+  offers: getRandom(ARRAY_OFFERS).offers[getRandomInteger(0, 1)].title,
+  price: getRandom(ARRAY_OFFERS).offers[getRandomInteger(0, 1)].price,
+  type: getRandom(TYPES),
+  destinations: getRandom(DESTINATIONS),
+  basePrice: getRandom(PRICES),
+  isFavorite: getRandomElse(IS_FAVORITES),
 });
