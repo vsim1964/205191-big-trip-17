@@ -5,7 +5,6 @@ import PointView from '../view/point-view.js';
 import AddEditView from '../view/add-edit-view.js';
 import EmptyView from '../view/empty-view.js';
 
-
 import {
   RenderPosition,
   render
@@ -15,18 +14,19 @@ import {
 export default class ListPresenter {
   eventsComponent = new EventsView();
   listComponent = new ListView();
-  addEditComponent = new AddEditView();
 
-  init = (listContainer, pointModel) => {
+  init = (listContainer, pointModel, defaultPointModel) => {
     this.listContainer = listContainer;
     this.pointModel = pointModel;
     this.listPoints = [...this.pointModel.getPoints()];
+    this.defaultPointModel = defaultPointModel;
+    this.defaultPoint = this.defaultPointModel.getDefaultPoints();
 
     render(this.eventsComponent, this.listContainer);
     render(new SortView(), this.eventsComponent.getElement());
     render(this.listComponent, this.eventsComponent.getElement());
 
-    render(this.addEditComponent, this.listComponent.getElement(), RenderPosition.AFTERBEGIN);
+    render(new AddEditView(this.defaultPoint), this.listComponent.getElement(), RenderPosition.AFTERBEGIN);
 
     if (PointView !== null) {
       for (let i = 0; i < this.listPoints.length; i++) {

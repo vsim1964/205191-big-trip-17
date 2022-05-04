@@ -5,17 +5,16 @@ import {
 
 const createAddEditTemplate = (point = {}) => {
   const {
-    date,
-    basePrice,
-    price,
-    dateFrom,
-    dateTo,
-    type,
-    destination,
-    offers,
-    isFavorite,
-    diffTime
+    //  basePrice,
+    //  dateFrom,
+    //  dateTo,
+    //  destination,
+    //  id,
+    //  isDavorite,
+    //  offers,
+    type
   } = point;
+
   return (
     `
 	 <form class="event event--edit" action="#" method="post">
@@ -81,7 +80,7 @@ const createAddEditTemplate = (point = {}) => {
 
 		<div class="event__field-group  event__field-group--destination">
 		  <label class="event__label  event__type-output" for="event-destination-1">
-			 Flight
+		  ${type}
 		  </label>
 		  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
 		  <datalist id="destination-list-1">
@@ -181,10 +180,14 @@ const createAddEditTemplate = (point = {}) => {
   );
 };
 
-export default class AddEdiView {
+export default class AddEditView {
+
+  constructor(point) {
+    this.point = point;
+  }
 
   getTemplate() {
-    return createAddEditTemplate();
+    return createAddEditTemplate(this.point);
   }
 
   getElement() {
