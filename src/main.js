@@ -20,4 +20,7 @@ const defaultPoint = new AddEditModel();
 
 render(new FilterView(), controlsFilters);
 
+
 list.init(listContainer, point, defaultPoint);
+
+list.renderPoint(point, defaultPoint);

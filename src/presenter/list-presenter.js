@@ -16,6 +16,7 @@ export default class ListPresenter {
   #eventsComponent = new EventsView();
   #listComponent = new ListView();
 
+
   init = (listContainer, pointModel, defaultPointModel) => {
     this.#listContainer = listContainer;
     this.#pointModel = pointModel;
@@ -41,4 +42,40 @@ export default class ListPresenter {
       render(new EmptyView(), this.#listComponent.element);
     }
   };
+
+  renderPoint = (point, defaultPoint) => {
+    const addEditComponent = new AddEditView();
+    const pointComponent = new PointView(point);
+    const listComponent = new ListView(defaultPoint);
+
+    const replacePointToForm = () => {
+      this.#eventsComponent.element.replaceChild(addEditComponent.element, listComponent.element);
+    };
+
+    const replaceFormToPoint = () => {
+      this.#eventsComponent.element.replaceChild(listComponent.element, addEditComponent.element);
+    };
+
+    const onEscKeyDown = (evt) => {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        replaceFormToPoint();
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+
+    pointComponent.element.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+      replacePointToForm();
+      document.addEventListener('keydown', onEscKeyDown);
+    });
+
+    addEditComponent.element.element.querySelector('.event__save-btn').addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      replaceFormToPoint();
+      document.removeEventListener('keydown', onEscKeyDown);
+    });
+
+    render(pointComponent, this.#eventsComponent.element);
+  };
+
 }
