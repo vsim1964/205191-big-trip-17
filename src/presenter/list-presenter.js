@@ -28,19 +28,7 @@ export default class ListPresenter {
     render(new SortView(), this.#eventsComponent.element);
     render(this.#listComponent, this.#eventsComponent.element);
 
-    render(
-      new AddEditView(this.#defaultPoint),
-      this.#listComponent.element,
-      RenderPosition.AFTERBEGIN
-    );
-
-    if (PointView !== null) {
-      for (let i = 0; i < this.#listPoints.length; i++) {
-        render(new PointView(this.#listPoints[i]), this.#listComponent.element);
-      }
-    } else {
-      render(new EmptyView(), this.#listComponent.element);
-    }
+    renderPoint(pointModel, defaultPointModel);
   };
 
   renderPoint = (point, defaultPoint) => {
@@ -64,18 +52,31 @@ export default class ListPresenter {
       }
     };
 
-    pointComponent.element.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    pointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
       replacePointToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    addEditComponent.element.element.querySelector('.event__save-btn').addEventListener('submit', (evt) => {
+    addEditComponent.element.querySelector('.event__save-btn').addEventListener('submit', (evt) => {
       evt.preventDefault();
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    render(pointComponent, this.#eventsComponent.element);
+
+    render(
+      new AddEditView(this.#defaultPoint),
+      this.#listComponent.element,
+      RenderPosition.AFTERBEGIN
+    );
+
+    if (PointView !== null) {
+      for (let i = 0; i < this.#listPoints.length; i++) {
+        render(new PointView(this.#listPoints[i]), this.#listComponent.element);
+      }
+    } else {
+      render(new EmptyView(), this.#listComponent.element);
+    }
   };
 
 }
