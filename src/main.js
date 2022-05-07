@@ -12,13 +12,10 @@ const controlsFilters = siteHeaderElement.querySelector('.trip-controls__filters
 const siteMainElement = document.querySelector('.page-main');
 const listContainer = siteMainElement.querySelector('.page-body__container');
 
-
 const list = new ListPresenter();
 const point = new PointsModel();
 const defaultPoint = new AddEditModel();
 
-
 render(new FilterView(), controlsFilters);
-
 
 list.init(listContainer, point, defaultPoint);

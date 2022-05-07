@@ -3,9 +3,8 @@ import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import AddEditView from '../view/add-edit-view.js';
-import EmptyView from '../view/empty-view.js';
 
-import { RenderPosition, render } from '../render.js';
+import { render } from '../render.js';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -28,20 +27,19 @@ export default class ListPresenter {
     render(new SortView(), this.#eventsComponent.element);
     render(this.#listComponent, this.#eventsComponent.element);
 
-    renderPoint(pointModel, defaultPointModel);
+    this.#renderPoint(this.#listPoints[2]);
   };
 
-  renderPoint = (point, defaultPoint) => {
+  #renderPoint = (point) => {
     const addEditComponent = new AddEditView();
     const pointComponent = new PointView(point);
-    const listComponent = new ListView(defaultPoint);
 
     const replacePointToForm = () => {
-      this.#eventsComponent.element.replaceChild(addEditComponent.element, listComponent.element);
+      this.#listComponent.element.replaceChild(addEditComponent.element, pointComponent.element);
     };
 
     const replaceFormToPoint = () => {
-      this.#eventsComponent.element.replaceChild(listComponent.element, addEditComponent.element);
+      this.#listComponent.element.replaceChild(pointComponent.element, addEditComponent.element);
     };
 
     const onEscKeyDown = (evt) => {
@@ -63,20 +61,7 @@ export default class ListPresenter {
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-
-    render(
-      new AddEditView(this.#defaultPoint),
-      this.#listComponent.element,
-      RenderPosition.AFTERBEGIN
-    );
-
-    if (PointView !== null) {
-      for (let i = 0; i < this.#listPoints.length; i++) {
-        render(new PointView(this.#listPoints[i]), this.#listComponent.element);
-      }
-    } else {
-      render(new EmptyView(), this.#listComponent.element);
-    }
+    render(pointComponent, this.#listComponent.element);
   };
 
 }
