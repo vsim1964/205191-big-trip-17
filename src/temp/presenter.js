@@ -7,14 +7,14 @@
 
 
 // * вывод листа
-// if (PointView !== null) {
-//       for (let i = 0; i < this.#listPoints.length; i++) {
-//       render(new PointView(this.#listPoints[i]), this.#listComponent.element);
-//       }
-//    } else {
-//    render(new EmptyView(), this.#listComponent.element);
-// }
-
+// if (this.#listPoints.length > 0) {
+// 	for (let i = 0; i < this.#listPoints.length; i++) {
+// 	  render(this.#renderPoint(this.#listPoints[i]), this.#listComponent.element);
+// 	}
+//  } else {
+// 	render(new EmptyView(), this.#listComponent.element);
+//  }
+// };
 // * +++
 // const listComponent = new ListView(defaultPoint);
 

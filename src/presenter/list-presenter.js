@@ -3,7 +3,7 @@ import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import AddEditView from '../view/add-edit-view.js';
-
+// import EmptyView from '../view/empty-view.js';
 import { render } from '../render.js';
 
 export default class ListPresenter {
@@ -12,23 +12,10 @@ export default class ListPresenter {
   #listComponent = new ListView();
   #pointModel = null;
   #listPoints = null;
-  // #defaultPointModel = null;
-  // #defaultPoint = null;
 
+  init = (listContainer, pointModel) => {
 
-
-  init = (listContainer, pointModel, defaultPointModel) => {
-    this.#listContainer = listContainer;
-    this.#pointModel = pointModel;
-    this.#listPoints = [...this.#pointModel.getPoints()];
-    // this.#defaultPointModel = defaultPointModel;
-    // this.#defaultPoint = this.#defaultPointModel.getDefaultPoints();
-
-    render(this.#eventsComponent, this.#listContainer);
-    render(new SortView(), this.#eventsComponent.element);
-    render(this.#listComponent, this.#eventsComponent.element);
-
-    this.#renderPoint(this.#listPoints[2]);
+    this.#renderList(listContainer, pointModel);
   };
 
   #renderPoint = (point) => {
@@ -65,6 +52,19 @@ export default class ListPresenter {
     render(pointComponent, this.#listComponent.element);
   };
 
+  #renderList = (listContainer, pointModel) => {
+
+    this.#listContainer = listContainer;
+    this.#pointModel = pointModel;
+    this.#listPoints = [...this.#pointModel.getPoints()];
+
+    render(this.#eventsComponent, this.#listContainer);
+    render(new SortView(), this.#eventsComponent.element);
+    render(this.#listComponent, this.#eventsComponent.element);
 
 
+    for (let i = 0; i < this.#listPoints.length; i++) {
+      render(this.#renderPoint(this.#listPoints[i]), this.#listComponent.element);
+    }
+  };
 }
