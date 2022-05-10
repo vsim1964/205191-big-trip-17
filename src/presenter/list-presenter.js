@@ -8,20 +8,21 @@ import { render } from '../render.js';
 
 export default class ListPresenter {
   #listContainer = null;
-  #pointModel = null;
-  #listPoints = null;
-  #defaultPointModel = null;
-  #defaultPoint = null;
   #eventsComponent = new EventsView();
   #listComponent = new ListView();
+  #pointModel = null;
+  #listPoints = null;
+  // #defaultPointModel = null;
+  // #defaultPoint = null;
+
 
 
   init = (listContainer, pointModel, defaultPointModel) => {
     this.#listContainer = listContainer;
     this.#pointModel = pointModel;
     this.#listPoints = [...this.#pointModel.getPoints()];
-    this.#defaultPointModel = defaultPointModel;
-    this.#defaultPoint = this.#defaultPointModel.getDefaultPoints();
+    // this.#defaultPointModel = defaultPointModel;
+    // this.#defaultPoint = this.#defaultPointModel.getDefaultPoints();
 
     render(this.#eventsComponent, this.#listContainer);
     render(new SortView(), this.#eventsComponent.element);
@@ -63,5 +64,7 @@ export default class ListPresenter {
 
     render(pointComponent, this.#listComponent.element);
   };
+
+
 
 }
