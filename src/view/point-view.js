@@ -1,6 +1,4 @@
-import {
-  createElement
-} from '../render.js';
+import { createElement } from '../render.js';
 
 const createPointTemplate = (point) => {
   const {
@@ -13,11 +11,14 @@ const createPointTemplate = (point) => {
     destination,
     offers,
     isFavorite,
-    diffTime
+    diffTime,
   } = point;
 
-  return (
-    `<li class="trip-events__item">
+  const favoriteClassName = isFavorite
+    ? 'event__favorite-btn event__favorite-btn--active'
+    : 'event__favorite-btn';
+
+  return `<li class="trip-events__item">
 <div class="event">
   <time class="event__date" datetime="2019-03-18">${date}</time>
   <div class="event__type">
@@ -43,7 +44,7 @@ const createPointTemplate = (point) => {
 		<span class="event__offer-price">${price}</span>
 	 </li>
   </ul>
-  <button class="event__favorite-btn ${isFavorite}" type="button">
+  <button class="event__favorite-btn ${favoriteClassName}" type="button">
 	 <span class="visually-hidden">Add to favorite</span>
 	 <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
 		<path
@@ -54,26 +55,26 @@ const createPointTemplate = (point) => {
 	 <span class="visually-hidden">Open event</span>
   </button>
 </div>
-</li>`
-  );
+</li>`;
 };
 
 export default class PointView {
+  #element = null;
 
   constructor(point) {
     this.point = point;
   }
 
-  getTemplate() {
+  get template() {
     return createPointTemplate(this.point);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {

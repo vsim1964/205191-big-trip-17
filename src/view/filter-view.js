@@ -1,6 +1,4 @@
-import {
-  createElement
-} from '../render.js';
+import { createElement } from "../render.js";
 
 const createFilterTemplate = () => `
 <form class="trip-filters" action="#" method="get">
@@ -24,16 +22,22 @@ const createFilterTemplate = () => `
 `;
 
 export default class FilterView {
-  getTemplate() {
-    return createFilterTemplate();
+  #element = null;
+
+  constructor(point) {
+    this.point = point;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get template() {
+    return createFilterTemplate(this.point);
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
