@@ -7,10 +7,31 @@ const createAddEditTemplate = (point = {}) => {
     dateTo,
     destination,
     //  id,
-    //  isDavorite,
+    //  isFavorite,
     //  offers,
     type,
   } = point;
+
+  // ! ПОПЫТКА СВЯЗАТЬ ТИП ДАННЫХ И ОФФЕРЫ. Предполагается вставка ${offerStrings}
+
+  // const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
+  // const chunk = pointTypeOffer.offers;
+  // const offerStrings = [];
+  // for (let i = 0; i < chunk.length; i++) {
+  // 	offerStrings[i] += `
+  // 	<div class="event__available-offers">
+  // 	<div class="event__offer-selector">
+  // 		<input class="event__offer-checkbox  visually-hidden" id="${chunk[i].id}" type="checkbox" name="event-offer-luggage"
+  // 			checked>
+  // 		<label class="event__offer-label" for="${chunk[i].id}">
+  // 			<span class="event__offer-title">${chunk[i].title}</span>
+  // 			&plus;&euro;&nbsp;
+  // 			<span class="event__offer-price">${chunk[i].price}</span>
+  // 		</label>
+  // 	</div>
+  // 	</div>
+  // `;
+  // }
 
   return `
 	 <form class="event event--edit" action="#" method="post">
