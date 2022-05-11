@@ -19,7 +19,7 @@ export default class ListPresenter {
   };
 
   #renderPoint = (point) => {
-    const addEditComponent = new AddEditView();
+    const addEditComponent = new AddEditView(point);
     const pointComponent = new PointView(point);
 
     const replacePointToForm = () => {
