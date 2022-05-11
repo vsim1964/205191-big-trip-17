@@ -14,6 +14,10 @@ const createPointTemplate = (point) => {
     diffTime,
   } = point;
 
+  const favoriteClassName = isFavorite
+    ? 'event__favorite-btn event__favorite-btn--active'
+    : 'event__favorite-btn';
+
   return `<li class="trip-events__item">
 <div class="event">
   <time class="event__date" datetime="2019-03-18">${date}</time>
@@ -40,7 +44,7 @@ const createPointTemplate = (point) => {
 		<span class="event__offer-price">${price}</span>
 	 </li>
   </ul>
-  <button class="event__favorite-btn ${isFavorite}" type="button">
+  <button class="event__favorite-btn ${favoriteClassName}" type="button">
 	 <span class="visually-hidden">Add to favorite</span>
 	 <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
 		<path
