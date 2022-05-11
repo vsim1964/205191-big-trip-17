@@ -1,4 +1,4 @@
-const arrayDestinations = [
+const ARRAY_DESTINATIONS = [
 
   {
     'description': 'London is a capital Great Britain, a true asian pearl, with crowded streets.',
@@ -27,5 +27,5 @@ const arrayDestinations = [
 ];
 
 export {
-  arrayDestinations
+  ARRAY_DESTINATIONS
 };
