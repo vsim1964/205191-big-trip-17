@@ -1,37 +1,37 @@
 import { createElement } from '../render.js';
+import { ARRAY_OFFERS } from '../mock/offers.js';
 
 const createAddEditTemplate = (point = {}) => {
   const {
     basePrice,
     dateFrom,
     dateTo,
-    destination,
+    destinations,
     //  id,
     //  isFavorite,
     //  offers,
     type,
   } = point;
 
-  // ! ПОПЫТКА СВЯЗАТЬ ТИП ДАННЫХ И ОФФЕРЫ. Предполагается вставка ${offerStrings}
 
-  // const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
-  // const chunk = pointTypeOffer.offers;
-  // const offerStrings = [];
-  // for (let i = 0; i < chunk.length; i++) {
-  // 	offerStrings[i] += `
-  // 	<div class="event__available-offers">
-  // 	<div class="event__offer-selector">
-  // 		<input class="event__offer-checkbox  visually-hidden" id="${chunk[i].id}" type="checkbox" name="event-offer-luggage"
-  // 			checked>
-  // 		<label class="event__offer-label" for="${chunk[i].id}">
-  // 			<span class="event__offer-title">${chunk[i].title}</span>
-  // 			&plus;&euro;&nbsp;
-  // 			<span class="event__offer-price">${chunk[i].price}</span>
-  // 		</label>
-  // 	</div>
-  // 	</div>
-  // `;
-  // }
+  const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
+  const chunk = pointTypeOffer.offers;
+  const offerStrings = [];
+  for (let i = 0; i < chunk.length; i++) {
+    offerStrings[i] += `
+  	<div class="event__available-offers">
+  	<div class="event__offer-selector">
+  		<input class="event__offer-checkbox  visually-hidden" id="${chunk[i].id}" type="checkbox" name="event-offer-luggage"
+  			checked>
+  		<label class="event__offer-label" for="${chunk[i].id}">
+  			<span class="event__offer-title">${chunk[i].title}</span>
+  			&plus;&euro;&nbsp;
+  			<span class="event__offer-price">${chunk[i].price}</span>
+  		</label>
+  	</div>
+  	</div>
+  `;
+  }
 
   return `
 	 <form class="event event--edit" action="#" method="post">
@@ -99,11 +99,11 @@ const createAddEditTemplate = (point = {}) => {
 		  <label class="event__label  event__type-output" for="event-destination-1">
 		  ${type}
 		  </label>
-		  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination}" list="destination-list-1">
+		  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinations}" list="destination-list-1">
 		  <datalist id="destination-list-1">
-			 <option value="${destination}"></option>
-			 <option value="${destination}"></option>
-			 <option value="${destination}"></option>
+			 <option value="${destinations}"></option>
+			 <option value="${destinations}"></option>
+			 <option value="${destinations}"></option>
 		  </datalist>
 		</div>
 
@@ -129,7 +129,7 @@ const createAddEditTemplate = (point = {}) => {
 	 <section class="event__details">
 		<section class="event__section  event__section--offers">
 		  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-
+		  ${offerStrings}
 
 		</section>
 

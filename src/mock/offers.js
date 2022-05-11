@@ -1,7 +1,7 @@
 const ARRAY_OFFERS = [
 
   {
-    'type': 'taxi',
+    'type': 'Taxi',
     'offers': [{
       'id': 1,
       'title': 'Upgrade to a business class',
@@ -13,7 +13,7 @@ const ARRAY_OFFERS = [
     }]
   },
   {
-    'type': 'flight',
+    'type': 'Flight',
     'offers': [{
       'id': 1,
       'title': 'Add luggage',
@@ -25,7 +25,7 @@ const ARRAY_OFFERS = [
     }]
   },
   {
-    'type': 'drive',
+    'type': 'Drive',
     'offers': [{
       'id': 1,
       'title': 'Rent a car',
