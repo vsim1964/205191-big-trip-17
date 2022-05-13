@@ -1,10 +1,11 @@
+import {render} from '../framework/render.js';
 import EventsView from '../view/events-view.js';
 import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import AddEditView from '../view/add-edit-view.js';
 import EmptyView from '../view/empty-view.js';
-import { render } from '../render.js';
+
 
 export default class ListPresenter {
   #listContainer = null;

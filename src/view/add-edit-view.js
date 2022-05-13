@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { ARRAY_OFFERS } from '../mock/offers.js';
 import { ARRAY_DESTINATIONS } from '../mock/destinations.js';
 
@@ -11,29 +11,23 @@ const createAddEditTemplate = (point) => {
     type,
   } = point;
 
-  /*
-	* написать функцию, которая по чанку возвращает разметку оффера,
-	* потом для массива чанков сделать map, который вернет массив разметок офферов,
-	* нарисовать это в нужном месте интерфейса
-	*/
-
   const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
   const chunkOffers = pointTypeOffer.offers;
-  const getMarkupOffer = () => `
+  const getMarkupOffer = (offer) => `
   <div class="event__available-offers">
    <div class="event__offer-selector">
-		<input class="event__offer-checkbox  visually-hidden" id="${chunkOffers.id}" type="checkbox" name="event-offer-luggage"
+		<input class="event__offer-checkbox  visually-hidden" id="${offer.id}" type="checkbox" name="event-offer-luggage"
 			checked>
-		<label class="event__offer-label" for="${chunkOffers.id}">
-			<span class="event__offer-title">${chunkOffers.title}</span>
+		<label class="event__offer-label" for="${offer.id}">
+			<span class="event__offer-title">${offer.title}</span>
 			&plus;&euro;&nbsp;
-			<span class="event__offer-price">${chunkOffers.price}</span>
+			<span class="event__offer-price">${offer.price}</span>
 		</label>
 	</div>
 	</div>`;
   const stringOffers = chunkOffers.map(getMarkupOffer);
 
-  const pointTypeDestination = ARRAY_DESTINATIONS.find((destination) => destination.name === point.destinations);
+  const pointTypeDestination = ARRAY_DESTINATIONS.find((destination) => destination.name === destinations);
   const getMarkupDestination = () =>  `
 <p class="event__destination-description">${pointTypeDestination.description}</p>
 <div class="event__photos-container">
@@ -146,33 +140,22 @@ const createAddEditTemplate = (point) => {
 		<section class="event__section  event__section--destination">
 		  <h3 class="event__section-title  event__section-title--destination">Destination</h3>
 
-			  ${getMarkupDestination}
+			  ${getMarkupDestination()}
 
 		</section>
 	 </section>
   </form>`;
 };
 
-export default class AddEditView {
-  #element = null;
+export default class AddEditView extends AbstractView  {
+  #point = null;
 
   constructor(point) {
-    this.point = point;
+    super();
+    this.#point = point;
   }
 
   get template() {
-    return createAddEditTemplate(this.point);
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.element = null;
+    return createAddEditTemplate(this.#point);
   }
 }
