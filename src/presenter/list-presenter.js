@@ -3,7 +3,7 @@ import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import AddEditView from '../view/add-edit-view.js';
-// import EmptyView from '../view/empty-view.js';
+import EmptyView from '../view/empty-view.js';
 import { render } from '../render.js';
 
 export default class ListPresenter {
@@ -62,8 +62,12 @@ export default class ListPresenter {
     render(new SortView(), this.#eventsComponent.element);
     render(this.#listComponent, this.#eventsComponent.element);
 
-    for (let i = 0; i < this.#listPoints.length; i++) {
-      this.#renderPoint(this.#listPoints[i]);
+    if (this.#listPoints.length > 0) {
+      for (let i = 0; i < this.#listPoints.length; i++) {
+        this.#renderPoint(this.#listPoints[i]);
+      }
+    } else {
+      render(new EmptyView(), this.#listComponent.element);
     }
   };
 }

@@ -1,37 +1,47 @@
 import { createElement } from '../render.js';
+import { ARRAY_OFFERS } from '../mock/offers.js';
+import { ARRAY_DESTINATIONS } from '../mock/destinations.js';
 
-const createAddEditTemplate = (point = {}) => {
+const createAddEditTemplate = (point) => {
   const {
     basePrice,
     dateFrom,
     dateTo,
-    destination,
-    //  id,
-    //  isFavorite,
-    //  offers,
+    destinations,
     type,
   } = point;
 
-  // ! ПОПЫТКА СВЯЗАТЬ ТИП ДАННЫХ И ОФФЕРЫ. Предполагается вставка ${offerStrings}
+  /*
+	* написать функцию, которая по чанку возвращает разметку оффера,
+	* потом для массива чанков сделать map, который вернет массив разметок офферов,
+	* нарисовать это в нужном месте интерфейса
+	*/
 
-  // const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
-  // const chunk = pointTypeOffer.offers;
-  // const offerStrings = [];
-  // for (let i = 0; i < chunk.length; i++) {
-  // 	offerStrings[i] += `
-  // 	<div class="event__available-offers">
-  // 	<div class="event__offer-selector">
-  // 		<input class="event__offer-checkbox  visually-hidden" id="${chunk[i].id}" type="checkbox" name="event-offer-luggage"
-  // 			checked>
-  // 		<label class="event__offer-label" for="${chunk[i].id}">
-  // 			<span class="event__offer-title">${chunk[i].title}</span>
-  // 			&plus;&euro;&nbsp;
-  // 			<span class="event__offer-price">${chunk[i].price}</span>
-  // 		</label>
-  // 	</div>
-  // 	</div>
-  // `;
-  // }
+  const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
+  const chunkOffers = pointTypeOffer.offers;
+  const getMarkupOffer = () => `
+  <div class="event__available-offers">
+   <div class="event__offer-selector">
+		<input class="event__offer-checkbox  visually-hidden" id="${chunkOffers.id}" type="checkbox" name="event-offer-luggage"
+			checked>
+		<label class="event__offer-label" for="${chunkOffers.id}">
+			<span class="event__offer-title">${chunkOffers.title}</span>
+			&plus;&euro;&nbsp;
+			<span class="event__offer-price">${chunkOffers.price}</span>
+		</label>
+	</div>
+	</div>`;
+  const stringOffers = chunkOffers.map(getMarkupOffer);
+
+  const pointTypeDestination = ARRAY_DESTINATIONS.find((destination) => destination.name === point.destinations);
+  const getMarkupDestination = () =>  `
+<p class="event__destination-description">${pointTypeDestination.description}</p>
+<div class="event__photos-container">
+	<div class="event__photos-tape">
+		<img class="event__photo" src="${pointTypeDestination.pictures[0].src}" alt="${pointTypeDestination.pictures[0].description}">
+	</div>
+</div>`;
+
 
   return `
 	 <form class="event event--edit" action="#" method="post">
@@ -99,11 +109,11 @@ const createAddEditTemplate = (point = {}) => {
 		  <label class="event__label  event__type-output" for="event-destination-1">
 		  ${type}
 		  </label>
-		  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination}" list="destination-list-1">
+		  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinations}" list="destination-list-1">
 		  <datalist id="destination-list-1">
-			 <option value="${destination}"></option>
-			 <option value="${destination}"></option>
-			 <option value="${destination}"></option>
+			 <option value="${destinations}"></option>
+			 <option value="${destinations}"></option>
+			 <option value="${destinations}"></option>
 		  </datalist>
 		</div>
 
@@ -129,14 +139,14 @@ const createAddEditTemplate = (point = {}) => {
 	 <section class="event__details">
 		<section class="event__section  event__section--offers">
 		  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-
+		  		${stringOffers}
 
 		</section>
 
 		<section class="event__section  event__section--destination">
 		  <h3 class="event__section-title  event__section-title--destination">Destination</h3>
 
-
+			  ${getMarkupDestination}
 
 		</section>
 	 </section>
