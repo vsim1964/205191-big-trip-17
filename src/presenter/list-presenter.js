@@ -39,13 +39,12 @@ export default class ListPresenter {
       }
     };
 
-    pointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    pointComponent.setClickHandler(() => {
       replacePointToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    addEditComponent.element.querySelector('.event__save-btn').addEventListener('submit', (evt) => {
-      evt.preventDefault();
+    addEditComponent.setClickHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });

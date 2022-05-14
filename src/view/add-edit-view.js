@@ -158,4 +158,14 @@ export default class AddEditView extends AbstractView  {
   get template() {
     return createAddEditTemplate(this.#point);
   }
+
+  setClickHandler = (callback) => {
+    this._callback.click = callback;
+    this.element.querySelector('.event__save-btn').addEventListener('click', this.#clickHandler);
+  };
+
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.click();
+  };
 }
