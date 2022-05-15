@@ -1,27 +1,20 @@
-import { createElement } from "../render.js";
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createListTemplate = () => '<ul class="trip-events__list"></ul>';
 
-export default class ListView {
-  #element = null;
-
-  constructor(point) {
-    this.point = point;
-  }
+export default class ListView extends AbstractView  {
 
   get template() {
-    return createListTemplate(this.point);
+    return createListTemplate();
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  setClickHandler = (callback) => {
+    this._callback.click = callback;
+    this.element.addEventListener('click', this.#clickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.click();
+  };
 }

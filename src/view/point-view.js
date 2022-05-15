@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createPointTemplate = (point) => {
   const {
@@ -8,7 +8,7 @@ const createPointTemplate = (point) => {
     dateFrom,
     dateTo,
     type,
-    destination,
+    destinations,
     offers,
     isFavorite,
     diffTime,
@@ -24,7 +24,7 @@ const createPointTemplate = (point) => {
   <div class="event__type">
 	 <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
   </div>
-  <h3 class="event__title">${type} ${destination}</h3>
+  <h3 class="event__title">${type} ${destinations}</h3>
   <div class="event__schedule">
 	 <p class="event__time">
 		<time class="event__start-time" datetime="2019-03-18T10:30">${dateFrom}</time>
@@ -58,26 +58,25 @@ const createPointTemplate = (point) => {
 </li>`;
 };
 
-export default class PointView {
-  #element = null;
+export default class PointView extends AbstractView  {
+  #point = null;
 
   constructor(point) {
-    this.point = point;
+    super();
+    this.#point = point;
   }
 
   get template() {
-    return createPointTemplate(this.point);
+    return createPointTemplate(this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  setClickHandler = (callback) => {
+    this._callback.click = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#clickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.click();
+  };
 }
