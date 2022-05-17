@@ -1,11 +1,10 @@
-import {render} from '../framework/render.js';
+import {render, replace} from '../framework/render.js';
 import EventsView from '../view/events-view.js';
 import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import AddEditView from '../view/add-edit-view.js';
 import EmptyView from '../view/empty-view.js';
-
 
 export default class ListPresenter {
   #listContainer = null;
@@ -23,32 +22,23 @@ export default class ListPresenter {
     const addEditComponent = new AddEditView(point);
     const pointComponent = new PointView(point);
 
-    const replacePointToForm = () => {
-      this.#listComponent.element.replaceChild(addEditComponent.element, pointComponent.element);
-    };
-
-    const replaceFormToPoint = () => {
-      this.#listComponent.element.replaceChild(pointComponent.element, addEditComponent.element);
-    };
-
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
-        replaceFormToPoint();
+        replace(pointComponent, addEditComponent);
         document.removeEventListener('keydown', onEscKeyDown);
       }
     };
 
     pointComponent.setPointHandler(() => {
-      replacePointToForm();
+      replace(addEditComponent, pointComponent);
       document.addEventListener('keydown', onEscKeyDown);
     });
 
     addEditComponent.setEditHandler(() => {
-      replaceFormToPoint();
+      replace(pointComponent, addEditComponent);
       document.removeEventListener('keydown', onEscKeyDown);
     });
-
     render(pointComponent, this.#listComponent.element);
   };
 
