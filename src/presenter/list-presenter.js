@@ -1,10 +1,9 @@
-import {render, replace} from '../framework/render.js';
+import {render} from '../framework/render.js';
 import EventsView from '../view/events-view.js';
 import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
-import PointView from '../view/point-view.js';
-import AddEditView from '../view/add-edit-view.js';
 import EmptyView from '../view/empty-view.js';
+import PointPresenter from './point-presenter';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -14,36 +13,15 @@ export default class ListPresenter {
   #listPoints = null;
 
   init = (listContainer, point) => {
-
     this.#renderList(listContainer, point);
   };
 
   #renderPoint = (point) => {
-    const addEditComponent = new AddEditView(point);
-    const pointComponent = new PointView(point);
-
-    const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        replace(pointComponent, addEditComponent);
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
-
-    pointComponent.setPointHandler(() => {
-      replace(addEditComponent, pointComponent);
-      document.addEventListener('keydown', onEscKeyDown);
-    });
-
-    addEditComponent.setEditHandler(() => {
-      replace(pointComponent, addEditComponent);
-      document.removeEventListener('keydown', onEscKeyDown);
-    });
-    render(pointComponent, this.#listComponent.element);
+    const pointPresenter = new PointPresenter(this.#listComponent.element);
+    pointPresenter.init(point);
   };
 
   #renderList = (listContainer, point) => {
-
     this.#listContainer = listContainer;
     this.#pointModel = point;
     this.#listPoints = [...this.#pointModel.getPoints()];
