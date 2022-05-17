@@ -39,12 +39,12 @@ export default class ListPresenter {
       }
     };
 
-    pointComponent.setClickHandler(() => {
+    pointComponent.setPointHandler(() => {
       replacePointToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    addEditComponent.setClickHandler(() => {
+    addEditComponent.setEditHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });

@@ -27,12 +27,12 @@ export default class FilterView extends AbstractView  {
     return createFilterTemplate();
   }
 
-  setClickHandler = (callback) => {
+  setFilterHandler = (callback) => {
     this._callback.click = callback;
-    this.element.addEventListener('click', this.#clickHandler);
+    this.element.addEventListener('click', this.#filterHandler);
   };
 
-  #clickHandler = (evt) => {
+  #filterHandler = (evt) => {
     evt.preventDefault();
     this._callback.click();
   };
