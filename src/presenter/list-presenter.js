@@ -4,6 +4,7 @@ import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import EmptyView from '../view/empty-view.js';
 import PointPresenter from './point-presenter';
+import {updatePoint} from '../mock/utils/util-update';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -11,13 +12,19 @@ export default class ListPresenter {
   #listComponent = new ListView();
   #pointModel = null;
   #listPoints = null;
+  #pointPresenter =null;
 
   init = (listContainer, point) => {
     this.#renderList(listContainer, point);
   };
 
+  #handlePointChange = (updatedPoint) => {
+    this.#listPoints = updatePoint(this.#listPoints, updatedPoint);
+    this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
+  };
+
   #renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent.element);
+    const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange);
     pointPresenter.init(point);
   };
 

@@ -6,17 +6,23 @@ export default class PointPresenter {
   #listComponent = null;
   #pointComponent = null;
   #addEditComponent = null;
+  #changeData = null;
   #point = null;
 
-  constructor(listComponent) {
+  constructor(listComponent, changeData) {
     this.#listComponent = listComponent;
+    this.#changeData = changeData;
   }
 
+  #handleFavoriteClick = () => {
+    this.#changeData({...this.#point, isFavorite: !this.#point.isFavorite});
+  };
 
   init = (point) => {
     this.#point = point;
     this.#addEditComponent = new AddEditView(point);
     this.#pointComponent = new PointView(point);
+
 
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
@@ -35,6 +41,8 @@ export default class PointPresenter {
       replace(this.#pointComponent, this.#addEditComponent);
       document.removeEventListener('keydown', onEscKeyDown);
     });
+
+    this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
 
     render(this.#pointComponent, this.#listComponent);
   };

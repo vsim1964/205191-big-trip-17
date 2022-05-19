@@ -50,3 +50,16 @@ git clone SSH-адрес_вашего_форка
 
 [check-image]: https://github.com/htmlacademy-ecmascript/205191-big-trip-17/workflows/Project%20check/badge.svg?branch=master
 [check-url]: https://github.com/htmlacademy-ecmascript/205191-big-trip-17/actions
+
+
+- другая библиотек дат
+- подключениевпереди создание точек
+- три ваиант строчки первой
+- фильтрация (?) 4.2 задача
+-
+- реорганизация презентера 5.1 +
+-
+- Частичный датабиндинг 5.1
+- открывается только один редактор  5.1
+-
+- сортировка 5.2
