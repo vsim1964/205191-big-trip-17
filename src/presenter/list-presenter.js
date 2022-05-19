@@ -12,10 +12,14 @@ export default class ListPresenter {
   #listComponent = new ListView();
   #pointModel = null;
   #listPoints = null;
-  #pointPresenter =null;
+  #pointPresenter = null;
 
   init = (listContainer, point) => {
     this.#renderList(listContainer, point);
+  };
+
+  #handleModeChange = () => {
+    this.#pointPresenter.forEach((presenter) => presenter.resetView());
   };
 
   #handlePointChange = (updatedPoint) => {
@@ -24,7 +28,7 @@ export default class ListPresenter {
   };
 
   #renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange);
+    const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange, this.#handleModeChange);
     pointPresenter.init(point);
   };
 
