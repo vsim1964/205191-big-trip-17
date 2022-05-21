@@ -33,8 +33,9 @@ export default class PointPresenter {
     this.#addEditComponent = new AddEditView(point);
     this.#pointComponent = new PointView(point);
 
+    this.#pointComponent.setEditClickHandler(this.#handleEditClick);
     this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
-    // this.#addEditComponent.setFormSubmitHandler(this.#handleFormSubmit);
+    this.#addEditComponent.setFormSubmitHandler(this.#handleFormSubmit);
 
     if (prevPointComponent === null || prevEditComponent === null) {
       render(this.#pointComponent, this.#listComponent);
@@ -43,9 +44,7 @@ export default class PointPresenter {
 
     if (this.#mode === Mode.DEFAULT) {
       replace(this.#pointComponent, prevPointComponent);
-    }
-
-    if (this.#mode === Mode.EDITING) {
+    } else if (this.#mode === Mode.EDITING) {
       replace(this.#addEditComponent, prevEditComponent);
     }
 

@@ -1,5 +1,5 @@
-const updatePoint = (points, update) => {
-  const index = points.findIndex((point) => point.id === update.id);
+const findUpdatePoint = (points, updatePoint) => {
+  const index = points.findIndex((point) => point.id === updatePoint.id);
 
   if (index === -1) {
     return points;
@@ -7,9 +7,9 @@ const updatePoint = (points, update) => {
 
   return [
     ...points.slice(0, index),
-    update,
+    updatePoint,
     ...points.slice(index + 1),
   ];
 };
 
-export { updatePoint };
+export { findUpdatePoint };

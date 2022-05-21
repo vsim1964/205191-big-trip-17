@@ -159,13 +159,13 @@ export default class AddEditView extends AbstractView  {
     return createAddEditTemplate(this.#point);
   }
 
-  setEditHandler = (callback) => {
-    this._callback.click = callback;
-    this.element.querySelector('.event__save-btn').addEventListener('click', this.#editHandler);
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
   };
 
-  #editHandler = (evt) => {
+  #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.click();
+    this._callback.formSubmit(this.#point);
   };
 }
