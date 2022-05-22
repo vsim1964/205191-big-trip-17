@@ -24,7 +24,7 @@ export default class ListPresenter {
 
   #handlePointChange = (updateDataPoint) => {
     this.#listPoints = findUpdatePoint(this.#listPoints, updateDataPoint);
-    this.#pointPresenter.get(updateDataPoint.id).init(updateDataPoint);
+    this.#pointPresenter.push(updateDataPoint.id).init(updateDataPoint);
   };
 
   #renderPoint = (point) => {
