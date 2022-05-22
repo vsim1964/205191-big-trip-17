@@ -12,7 +12,7 @@ export default class ListPresenter {
   #listComponent = new ListView();
   #pointModel = null;
   #listPoints = null;
-  #pointPresenter = null;
+  #pointPresenter = new Map();
 
   init = (listContainer, point) => {
     this.#renderList(listContainer, point);
@@ -30,7 +30,7 @@ export default class ListPresenter {
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange, this.#handleModeChange);
     pointPresenter.init(point);
-    // this.#pointPresenter.set(updateDataPoint.id, pointPresenter);
+    this.#pointPresenter.set(point.id, pointPresenter);
   };
 
   #renderList = (listContainer, point) => {
