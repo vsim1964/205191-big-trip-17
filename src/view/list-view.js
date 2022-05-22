@@ -8,12 +8,12 @@ export default class ListView extends AbstractView  {
     return createListTemplate();
   }
 
-  setClickHandler = (callback) => {
+  setListHandler = (callback) => {
     this._callback.click = callback;
-    this.element.addEventListener('click', this.#clickHandler);
+    this.element.addEventListener('click', this.#listHandler);
   };
 
-  #clickHandler = (evt) => {
+  #listHandler = (evt) => {
     evt.preventDefault();
     this._callback.click();
   };

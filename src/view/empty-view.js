@@ -9,12 +9,12 @@ export default class EmptyView extends AbstractView  {
     return createEmptyTemplate();
   }
 
-  setClickHandler = (callback) => {
+  setEmptyHandler = (callback) => {
     this._callback.click = callback;
-    this.element.addEventListener('click', this.#clickHandler);
+    this.element.addEventListener('click', this.#emptyHandler);
   };
 
-  #clickHandler = (evt) => {
+  #emptyHandler = (evt) => {
     evt.preventDefault();
     this._callback.click();
   };

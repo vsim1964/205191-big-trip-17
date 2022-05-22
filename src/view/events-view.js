@@ -9,12 +9,12 @@ export default class EventsView extends AbstractView  {
     return createTripEventsTemplate();
   }
 
-  setClickHandler = (callback) => {
+  setEventHandler = (callback) => {
     this._callback.click = callback;
-    this.element.addEventListener('click', this.#clickHandler);
+    this.element.addEventListener('click', this.#eventHandler);
   };
 
-  #clickHandler = (evt) => {
+  #eventHandler = (evt) => {
     evt.preventDefault();
     this._callback.click();
   };
