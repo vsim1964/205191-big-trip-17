@@ -24,12 +24,13 @@ export default class ListPresenter {
 
   #handlePointChange = (updateDataPoint) => {
     this.#listPoints = findUpdatePoint(this.#listPoints, updateDataPoint);
-    this.#pointPresenter.push(updateDataPoint.id).init(updateDataPoint);
+    this.#pointPresenter.get(updateDataPoint.id).init(updateDataPoint);
   };
 
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange, this.#handleModeChange);
     pointPresenter.init(point);
+    // this.#pointPresenter.set(updateDataPoint.id, pointPresenter);
   };
 
   #renderList = (listContainer, point) => {
