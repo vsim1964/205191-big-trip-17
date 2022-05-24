@@ -1,4 +1,4 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { ARRAY_OFFERS } from '../mock/offers.js';
 import { ARRAY_DESTINATIONS } from '../mock/destinations.js';
 
@@ -8,7 +8,7 @@ const createAddEditTemplate = (point) => {
     dateFrom,
     dateTo,
     destinations,
-    type,
+    type
   } = point;
 
   const pointTypeOffer = ARRAY_OFFERS.find((offer) => offer.type === point.type);
@@ -28,7 +28,7 @@ const createAddEditTemplate = (point) => {
   const stringOffers = chunkOffers.map(getMarkupOffer);
 
   const pointTypeDestination = ARRAY_DESTINATIONS.find((destination) => destination.name === destinations);
-  const getMarkupDestination = () =>  `
+  const getMarkupDestination = () => `
 <p class="event__destination-description">${pointTypeDestination.description}</p>
 <div class="event__photos-container">
 	<div class="event__photos-tape">
@@ -148,25 +148,54 @@ const createAddEditTemplate = (point) => {
 </form>`;
 };
 
-export default class AddEditView extends AbstractView  {
-  #point = null;
+export default class AddEditView extends AbstractStatefulView {
 
   constructor(point) {
     super();
-    this.#point = point;
+    this._state = AddEditView.parsePointToState(point);
+    this.#setInnerHandlers();
   }
 
   get template() {
-    return createAddEditTemplate(this.#point);
+    return createAddEditTemplate(this._state);
   }
+
+  #typeInputHandler = (evt) => {
+    evt.preventDefault();
+    this._state.newType = this.element.querySelector('.event__type-input').value;
+    this.updateElement({
+      type: this._state.newType,
+    });
+  };
 
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
+    this._callback.formSubmit(AddEditView.parseStateToPoint(this._state));
     this.element.addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formSubmitHandler);
+  };
+
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setFormSubmitHandler(this._callback.formSubmit);
   };
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit(this.#point);
+    this._callback.formSubmit(this._state);
+  };
+
+
+  #setInnerHandlers = () => {
+    this.element.querySelector('.event__type-input').addEventListener('click', this.#typeInputHandler);
+  };
+
+  static parsePointToState = (point) => ({
+    ...point,
+  });
+
+  static parseStateToPoint = (state) => {
+    const point = { ...state };
+    return point;
   };
 }
