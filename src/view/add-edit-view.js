@@ -162,9 +162,8 @@ export default class AddEditView extends AbstractStatefulView {
 
   #typeInputHandler = (evt) => {
     evt.preventDefault();
-    this._state.newType = this.element.querySelector('.event__type-input').value;
     this.updateElement({
-      type: this._state.newType,
+      type: evt.target.value,
     });
   };
 
