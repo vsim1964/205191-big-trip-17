@@ -169,7 +169,7 @@ export default class AddEditView extends AbstractStatefulView {
 
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
-    this._callback.formSubmit(AddEditView.parseStateToPoint(this._state));
+    //  this._callback.formSubmit(AddEditView.parseStateToPoint(this._state));
     this.element.addEventListener('submit', this.#formSubmitHandler);
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formSubmitHandler);
   };
@@ -183,7 +183,6 @@ export default class AddEditView extends AbstractStatefulView {
     evt.preventDefault();
     this._callback.formSubmit(this._state);
   };
-
 
   #setInnerHandlers = () => {
     this.element.querySelector('.event__type-input').addEventListener('click', this.#typeInputHandler);
