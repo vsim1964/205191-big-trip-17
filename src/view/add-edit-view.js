@@ -1,6 +1,9 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { ARRAY_OFFERS } from '../mock/offers.js';
 import { ARRAY_DESTINATIONS } from '../mock/destinations.js';
+import flatpickr from 'flatpickr';
+
+import 'flatpickr/dist/flatpickr.min.css';
 
 const createAddEditTemplate = (point) => {
   const {
@@ -149,11 +152,15 @@ const createAddEditTemplate = (point) => {
 };
 
 export default class AddEditView extends AbstractStatefulView {
+  #datefrompicker = null;
+  #datetopicker = null;
 
   constructor(point) {
     super();
     this._state = AddEditView.parsePointToState(point);
     this.#setInnerHandlers();
+    this.#setDateFromPicker();
+    this.#setDateToPicker();
   }
 
   get template() {
@@ -167,6 +174,19 @@ export default class AddEditView extends AbstractStatefulView {
     });
   };
 
+  removeElement = () => {
+    super.removeElement();
+
+    if (this.#setDateFromPicker) {
+      this.#setDateFromPicker.destroy();
+      this.#setDateFromPicker = null;
+    }
+	 if (this.#setDateToPicker) {
+      this.#setDateToPicker.destroy();
+      this.#setDateToPicker = null;
+    }
+  };
+
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
     //  this._callback.formSubmit(AddEditView.parseStateToPoint(this._state));
@@ -176,12 +196,54 @@ export default class AddEditView extends AbstractStatefulView {
 
   _restoreHandlers = () => {
     this.#setInnerHandlers();
+    this.#setDateFromPicker();
+    this.#setDateToPicker();
     this.setFormSubmitHandler(this._callback.formSubmit);
   };
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
     this._callback.formSubmit(this._state);
+  };
+
+  #dateFromChangeHandler = ([userDate]) => {
+    this.updateElement({
+      dateFrom: userDate,
+    });
+  };
+
+  #dateToChangeHandler = ([userDate]) => {
+    this.updateElement({
+      dateTo: userDate,
+    });
+  };
+
+  #setDateFromPicker = () => {
+    if (this._state.dateFrom) {
+      // flatpickr есть смысл инициализировать только в случае,
+      // если поле выбора даты доступно для заполнения
+      this.#datefrompicker = flatpickr(
+        this.element.querySelector('#event-start-time-1'),
+        {
+          dateFormat: 'Y/m/d H:i',
+          defaultDate: this._state.dateFrom,
+          onChange: this.#dateFromChangeHandler, // На событие flatpickr передаём наш колбэк
+        },
+      );
+    }
+  };
+
+  #setDateToPicker = () => {
+    if (this._state.dateTo) {
+      this.#datetopicker = flatpickr(
+        this.element.querySelector('#event-end-time-1'),
+        {
+          dateFormat: 'Y/m/d H:i',
+          defaultDate: this._state.dateTo,
+          onChange: this.#dateToChangeHandler, // На событие flatpickr передаём наш колбэк
+        },
+      );
+    }
   };
 
   #setInnerHandlers = () => {

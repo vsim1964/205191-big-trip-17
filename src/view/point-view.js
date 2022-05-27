@@ -89,4 +89,8 @@ export default class PointView extends AbstractView  {
     evt.preventDefault();
     this._callback.favoriteClick();
   };
+
+  // _restoreHandlers = () => {
+  //   this.#favoriteClickHandler(this._callback.favoriteClick);
+  // };
 }

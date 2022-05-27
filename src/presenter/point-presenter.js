@@ -88,7 +88,7 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClick = () => {
-    this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
+    this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite }); // callback
   };
 
   #handleFormSubmit = (point) => {
