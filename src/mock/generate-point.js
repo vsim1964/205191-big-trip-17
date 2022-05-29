@@ -30,11 +30,14 @@ const IS_FAVORITES = [FAVORITE_FALSE, FAVORITE_TRUE];
 const getRandom = (array) => array[getRandomInteger(0, array.length - 1)];
 const getRandomElse = (array) => array[getRandomInteger(0, 1)];
 
+const dateto = getRandom(DATES_TO);
+const datefrom = getRandom(DATES_FROM);
+
 export const generatePoint = () => ({
-  date: humanizeDateDueDate(getRandom(DATES_FROM)),
-  dateFrom: humanizeFromDueDate(getRandom(DATES_FROM)),
-  dateTo: humanizeToDueDate(getRandom(DATES_TO)),
-  diffTime: getDiffTime(getRandom(DATES_TO), getRandom(DATES_FROM)),
+  date: humanizeDateDueDate(datefrom),
+  dateFrom: humanizeFromDueDate(datefrom),
+  dateTo: humanizeToDueDate(dateto),
+  diffTime: getDiffTime(dateto, datefrom),
   offers: getRandom(ARRAY_OFFERS).offers[getRandomInteger(0, 1)].title,
   price: getRandom(ARRAY_OFFERS).offers[getRandomInteger(0, 1)].price,
   type: getRandom(TYPES),
@@ -42,3 +45,4 @@ export const generatePoint = () => ({
   basePrice: getRandom(PRICES),
   isFavorite: getRandomElse(IS_FAVORITES),
 });
+// * diffTime: getDiffTime(getRandom(DATES_TO), getRandom(DATES_FROM)),

@@ -178,12 +178,12 @@ export default class AddEditView extends AbstractStatefulView {
     super.removeElement();
 
     if (this.#setDateFromPicker) {
-      this.dateFromPicker.destroy();
-      this.#setDateFromPicker = null;
+      this.#datefrompicker.destroy();
+      this.#datefrompicker = null;
     }
     if (this.#setDateToPicker) {
-      this.dateToPicker.destroy();
-      this.#setDateToPicker = null;
+      this.#datetopicker.destroy();
+      this.#datetopicker = null;
     }
   };
 
@@ -220,6 +220,8 @@ export default class AddEditView extends AbstractStatefulView {
 
   #setDateFromPicker = () => {
     if (this._state.dateFrom) {
+      // flatpickr есть смысл инициализировать только в случае,
+      // если поле выбора даты доступно для заполнения
       this.#datefrompicker = flatpickr(
         this.element.querySelector('#event-start-time-1'),
         {

@@ -15,7 +15,7 @@ const humanizeToDueDate = (dueDate) => dayjs(dueDate).format('HH:mm');
 const getDiffTime = (date1, date2) => {
   let diffTime = '';
   const difference = (new Date(date2)) - (new Date(date1));
-  const day = Math.floor((difference / 1000 / 60 / 60 * 22) % 7);
+  const day = Math.floor(difference / (1000 * 60 * 60 * 24));
   const hour = Math.floor((difference / 1000 / 60 / 60) % 24);
   const min = Math.floor((difference / 1000 / 60) % 60);
   if (difference < 3600000) {
@@ -35,3 +35,9 @@ export {
   humanizeToDueDate,
   getDiffTime
 };
+
+
+const DATES_FROM = '2019-07-09T22:55:56.845Z';
+const DATES_TO = '2019-10-13T23:55:56.845Z';
+
+getDiffTime(DATES_FROM, DATES_TO);
