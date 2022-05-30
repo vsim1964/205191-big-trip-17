@@ -12,10 +12,18 @@ export default class ListPresenter {
   #eventsComponent = new EventsView();
   #listComponent = new ListView();
   #sortComponent = new SortView();
+  #emptyComponent = new EmptyView();
   #pointModel = null;
   #listPoints = null;
   #pointPresenter = new Map();
   #currentSortType = SortType.DEFAULT;
+
+  constructor(listContainer, pointModel) {
+    this.#listContainer = listContainer;
+    this.#pointModel = pointModel;
+
+    this.#pointModel.addObserver(this.#handleModelEvent);
+  }
 
   get points() {
     switch (this.#currentSortType) {
@@ -29,17 +37,28 @@ export default class ListPresenter {
     return this.#pointModel.points;
   }
 
-  init = (listContainer, point) => {
-    this.#renderList(listContainer, point);
+  init = () => {
+    this.#renderList();
   };
 
   #handleModeChange = () => {
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
   };
 
-  #handlePointChange = (updatedPoint) => {
-    // Здесь будем вызывать обновление модели
-    this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
+  #handleViewAction = (actionType, updateType, update) => {
+    console.log(actionType, updateType, update);
+    // Здесь будем вызывать обновление модели.
+    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
+    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
+    // update - обновленные данные
+  };
+
+  #handleModelEvent = (updateType, data) => {
+    console.log(updateType, data);
+    // В зависимости от типа изменений решаем, что делать:
+    // - обновить часть списка (например, когда поменялось описание)
+    // - обновить список (например, когда задача ушла в архив)
+    // - обновить всю доску (например, при переключении фильтра)
   };
 
   #handleSortTypeChange = (sortType) => {
@@ -60,7 +79,7 @@ export default class ListPresenter {
   };
 
   #renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange, this.#handleModeChange);
+    const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handleViewAction, this.#handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenter.set(point.id, pointPresenter);
   };
@@ -85,7 +104,7 @@ export default class ListPresenter {
         this.#renderSort(this.#listPoints[i]);
       }
     } else {
-      render(new EmptyView(), this.#listComponent.element);
+      render(this.#emptyComponent, this.#listComponent.element);
     }
   };
 }
