@@ -1,4 +1,4 @@
-import {render} from '../framework/render.js';
+import {render, RenderPosition} from '../framework/render.js';
 import EventsView from '../view/events-view.js';
 import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
@@ -12,6 +12,7 @@ export default class ListPresenter {
   #listContainer = null;
   #eventsComponent = new EventsView();
   #listComponent = new ListView();
+  #sortComponent = new SortView();
   #pointModel = null;
   #listPoints = null;
   #pointPresenter = new Map();
@@ -42,11 +43,29 @@ export default class ListPresenter {
     this.#pointPresenter.get(updateDataPoint.id).init(updateDataPoint);
   };
 
+  #handleSortTypeChange = (sortType) => {
+    // - Сортируем задачи
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+    this.#currentSortType = sortType;
+    // - Очищаем список
+    this.#clearList();
+    // - Рендерим список заново
+    this.#renderList();
+  };
+
+  #renderSort = () => {
+    render(this.#sortComponent, this.#listComponent.element, RenderPosition.AFTERBEGIN);
+    this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
+  };
+
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listComponent.element, this.#handlePointChange, this.#handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenter.set(point.id, pointPresenter);
   };
+
   #clearList = () => {
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
     this.#pointPresenter.clear();
