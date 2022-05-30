@@ -1,6 +1,8 @@
 import {render, replace, remove} from '../framework/render.js';
 import FilterView from '../view/filter-view.js';
-import {filter, FilterType, UpdateType} from '../mock/utils/util-fiter';
+import {filter, FilterType} from '../mock/utils/util-filter';
+import {UpdateType} from '../mock/utils/util-action_update';
+
 
 export default class FilterPresenter {
   #filterContainer = null;
@@ -45,7 +47,7 @@ export default class FilterPresenter {
     const prevFilterComponent = this.#filterComponent;
 
     this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
-    this.#filterComponent.setFilterTypeChangeHandler(this.#handleFilterTypeChange);
+    this.#filterComponent.TypeChangeHandler(this.#handleFilterTypeChange);
 
     if (prevFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
@@ -65,6 +67,6 @@ export default class FilterPresenter {
       return;
     }
 
-    this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
+    this.#filterModel(UpdateType.MAJOR, filterType);
   };
 }

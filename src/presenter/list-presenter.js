@@ -7,7 +7,7 @@ import PointPresenter from './point-presenter';
 import {sortTime, sortPrice} from '../mock/utils/util-sort';
 import {SortType} from '../mock/utils/util-sort';
 import {UpdateType, UserAction} from '../mock/utils/util-action_update';
-import {filter} from '../mock/utils/util-fiter';
+import {filter} from '../mock/utils/util-filter';
 
 export default class ListPresenter {
   #listContainer = null;
