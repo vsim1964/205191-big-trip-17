@@ -194,11 +194,17 @@ export default class AddEditView extends AbstractStatefulView {
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formSubmitHandler);
   };
 
+  setDeleteClickHandler = (callback) => {
+    this._callback.deleteClick = callback;
+    this.element.querySelector('.card__delete').addEventListener('click', this.#deleteClickHandler);
+  };
+
   _restoreHandlers = () => {
     this.#setInnerHandlers();
     this.#setDateFromPicker();
     this.#setDateToPicker();
     this.setFormSubmitHandler(this._callback.formSubmit);
+    this.setDeleteClickHandler(this._callback.deleteClick);
   };
 
   #formSubmitHandler = (evt) => {
@@ -248,6 +254,11 @@ export default class AddEditView extends AbstractStatefulView {
 
   #setInnerHandlers = () => {
     this.element.querySelector('.event__type-input').addEventListener('click', this.#typeInputHandler);
+  };
+
+  #deleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.deleteClick(AddEditView.parseStateToTask(this._state));
   };
 
   static parsePointToState = (point) => ({
