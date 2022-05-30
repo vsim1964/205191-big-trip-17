@@ -6,6 +6,7 @@ import EmptyView from '../view/empty-view.js';
 import PointPresenter from './point-presenter';
 import {sortTime, sortPrice} from '../mock/utils/util-sort';
 import {SortType} from '../mock/utils/util-sort';
+import {UpdateType, UserAction} from '../mock/utils/util-action_update';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -46,19 +47,32 @@ export default class ListPresenter {
   };
 
   #handleViewAction = (actionType, updateType, update) => {
-    console.log(actionType, updateType, update);
-    // Здесь будем вызывать обновление модели.
-    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
-    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
-    // update - обновленные данные
+    switch (actionType) {
+      case UserAction.UPDATE_POINT:
+        this.#pointModel.updatePoint(updateType, update);
+        break;
+      case UserAction.ADD_POINT:
+        this.#pointModel.addPoint(updateType, update);
+        break;
+      case UserAction.DELETE_POINT:
+        this.#pointModel.deletePoint(updateType, update);
+        break;
+    }
   };
 
   #handleModelEvent = (updateType, data) => {
-    console.log(updateType, data);
-    // В зависимости от типа изменений решаем, что делать:
-    // - обновить часть списка (например, когда поменялось описание)
-    // - обновить список (например, когда задача ушла в архив)
-    // - обновить всю доску (например, при переключении фильтра)
+    switch (updateType) {
+      case UpdateType.PATCH:
+        // - обновить часть списка
+        this.#pointPresenter.get(data.id).init(data);
+        break;
+      case UpdateType.MINOR:
+        // - обновить список
+        break;
+      case UpdateType.MAJOR:
+        // - обновить всю доску
+        break;
+    }
   };
 
   #handleSortTypeChange = (sortType) => {
