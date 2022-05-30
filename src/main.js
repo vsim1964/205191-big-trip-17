@@ -3,7 +3,7 @@ import FilterView from './view/filter-view.js';
 import ListPresenter from './presenter/list-presenter.js';
 import PointsModel from './model/points-model.js';
 import RouteView from './view/route-view.js';
-
+import FilterModel from './model/filter-model.js';
 
 const siteHeaderElement = document.querySelector('.page-header');
 const tripMain = siteHeaderElement.querySelector('.trip-main');
@@ -13,6 +13,7 @@ const listContainer = siteMainElement.querySelector('.page-body__container');
 
 const list = new ListPresenter();
 const point = new PointsModel();
+const filterModel = new FilterModel();
 
 render(new FilterView(), tripMain, 'afterbegin'  );
 render(new RouteView(), tripMain, 'afterbegin' );
