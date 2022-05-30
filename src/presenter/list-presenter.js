@@ -7,6 +7,7 @@ import PointPresenter from './point-presenter';
 import {sortTime, sortPrice} from '../mock/utils/util-sort';
 import {SortType} from '../mock/utils/util-sort';
 import {UpdateType, UserAction} from '../mock/utils/util-action_update';
+import {filter} from '../mock/utils/util-fiter';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -15,27 +16,32 @@ export default class ListPresenter {
   #sortComponent = null;
   #emptyComponent = new EmptyView();
   #pointModel = null;
+  #filterModel = null;
   #listPoints = null;
   #pointPresenter = new Map();
   #currentSortType = SortType.DEFAULT;
 
-  constructor(listContainer, pointModel) {
+  constructor(listContainer, pointModel,  filterModel) {
     this.#listContainer = listContainer;
     this.#pointModel = pointModel;
+    this.#filterModel = filterModel;
 
     this.#pointModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get points() {
+    const filterType = this.#filterModel.filter;
+    const points = this.#pointModel.tasks;
+    const filteredPoints = filter[filterType](points);
+
     switch (this.#currentSortType) {
       case SortType.TIME:
-        this.#listPoints.sort(sortTime);
-        break;
+        return filteredPoints.sort(sortTime);
       case SortType.PRICE:
-        this.#listPoints.sort(sortPrice);
-        break;
+        return filteredPoints.sort(sortPrice);
     }
-    return this.#pointModel.points;
+    return filteredPoints;
   }
 
   init = () => {
