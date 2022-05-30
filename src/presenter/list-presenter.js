@@ -5,6 +5,8 @@ import ListView from '../view/list-view.js';
 import EmptyView from '../view/empty-view.js';
 import PointPresenter from './point-presenter';
 import {findUpdatePoint} from '../mock/utils/util-update';
+import {sortTime, sortPrice} from '../mock/utils/util-sort';
+import {SortType} from '../mock/utils/util-sort';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -13,6 +15,19 @@ export default class ListPresenter {
   #pointModel = null;
   #listPoints = null;
   #pointPresenter = new Map();
+  #currentSortType = SortType.DEFAULT;
+
+  get points() {
+    switch (this.#currentSortType) {
+      case SortType.TIME:
+        this.#listPoints.sort(sortTime);
+        break;
+      case SortType.PRICE:
+        this.#listPoints.sort(sortPrice);
+        break;
+    }
+    return this.#pointModel.points;
+  }
 
   init = (listContainer, point) => {
     this.#renderList(listContainer, point);
@@ -32,6 +47,10 @@ export default class ListPresenter {
     pointPresenter.init(point);
     this.#pointPresenter.set(point.id, pointPresenter);
   };
+  #clearList = () => {
+    this.#pointPresenter.forEach((presenter) => presenter.destroy());
+    this.#pointPresenter.clear();
+  };
 
   #renderList = (listContainer, point) => {
     this.#listContainer = listContainer;
@@ -39,12 +58,13 @@ export default class ListPresenter {
     this.#listPoints = [...this.#pointModel.getPoints()];
 
     render(this.#eventsComponent, this.#listContainer);
-    render(new SortView(), this.#eventsComponent.element);
+    this.#renderSort(this.#listPoints[i]);
     render(this.#listComponent, this.#eventsComponent.element);
 
     if (this.#listPoints.length > 0) {
       for (let i = 0; i < this.#listPoints.length; i++) {
         this.#renderPoint(this.#listPoints[i]);
+        this.#renderSort(this.#listPoints[i]);
       }
     } else {
       render(new EmptyView(), this.#listComponent.element);
