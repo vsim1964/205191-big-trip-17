@@ -4,7 +4,6 @@ import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
 import EmptyView from '../view/empty-view.js';
 import PointPresenter from './point-presenter';
-import {findUpdatePoint} from '../mock/utils/util-update';
 import {sortTime, sortPrice} from '../mock/utils/util-sort';
 import {SortType} from '../mock/utils/util-sort';
 
@@ -38,9 +37,9 @@ export default class ListPresenter {
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
   };
 
-  #handlePointChange = (updateDataPoint) => {
-    this.#listPoints = findUpdatePoint(this.#listPoints, updateDataPoint);
-    this.#pointPresenter.get(updateDataPoint.id).init(updateDataPoint);
+  #handlePointChange = (updatedPoint) => {
+    // Здесь будем вызывать обновление модели
+    this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
   };
 
   #handleSortTypeChange = (sortType) => {
