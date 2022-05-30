@@ -11,4 +11,4 @@ const filter = {
   [FilterType.PAST]: (points) => points.filter((point) => now < point.dateTo),
 };
 
-export { filter };
+export { FilterType, filter };
