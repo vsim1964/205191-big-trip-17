@@ -12,7 +12,7 @@ export default class ListPresenter {
   #listContainer = null;
   #eventsComponent = new EventsView();
   #listComponent = new ListView();
-  #sortComponent = new SortView();
+  #sortComponent = null;
   #emptyComponent = new EmptyView();
   #pointModel = null;
   #listPoints = null;
@@ -67,10 +67,12 @@ export default class ListPresenter {
         this.#pointPresenter.get(data.id).init(data);
         break;
       case UpdateType.MINOR:
-        // - обновить список
+        this.#clearList();
+        this.#renderList();
         break;
       case UpdateType.MAJOR:
-        // - обновить всю доску
+        this.#clearList({resetSortType: true});
+        this.#renderList();
         break;
     }
   };
@@ -88,8 +90,9 @@ export default class ListPresenter {
   };
 
   #renderSort = () => {
-    render(this.#sortComponent, this.#listComponent.element, RenderPosition.AFTERBEGIN);
+    this.#sortComponent = new SortView(this.#currentSortType);
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
+    render(this.#sortComponent, this.#listComponent.element, RenderPosition.AFTERBEGIN);
   };
 
   #renderPoint = (point) => {
@@ -98,9 +101,16 @@ export default class ListPresenter {
     this.#pointPresenter.set(point.id, pointPresenter);
   };
 
-  #clearList = () => {
+  #clearList = ({resetSortType = false}) => {
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
     this.#pointPresenter.clear();
+
+    remove(this.#sortComponent);
+    remove(this.#emptyComponent);
+
+    if (resetSortType) {
+      this.#currentSortType = SortType.DEFAULT;
+    }
   };
 
   #renderList = (listContainer, point) => {

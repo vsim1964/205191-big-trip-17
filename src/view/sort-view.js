@@ -1,7 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {SortType} from '../mock/utils/util-sort';
 
-const createSortViewTemplate = () => `
+const createSortViewTemplate = (currentSortType) => `
  <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
  <div class="trip-sort__item  trip-sort__item--day">
 	<input id="sort-day" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-day" checked>
@@ -31,20 +31,26 @@ const createSortViewTemplate = () => `
  `;
 
 export default class SortView extends AbstractView  {
+  #currentSortType = null;
 
-  get template() {
-    return createSortViewTemplate();
+  constructor(currentSortType) {
+    super();
+    this.#currentSortType = currentSortType;
   }
 
-  setClickHandler = (callback) => {
-    this._callback.click = callback;
-    this.element.addEventListener('click', this.#clickHandler);
-  };
+  get template() {
+    return createSortViewTemplate(this.#currentSortType);
+  }
 
-  #clickHandler = (evt) => {
-    evt.preventDefault();
-    this._callback.click();
-  };
+  // setClickHandler = (callback) => {
+  //   this._callback.click = callback;
+  //   this.element.addEventListener('click', this.#clickHandler);
+  // };
+
+  // #clickHandler = (evt) => {
+  //   evt.preventDefault();
+  //   this._callback.click();
+  // };
 
   setSortTypeChangeHandler = (callback) => {
     this._callback.sortTypeChange = callback;
