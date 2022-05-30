@@ -225,7 +225,7 @@ export default class AddEditView extends AbstractStatefulView {
       this.#datefrompicker = flatpickr(
         this.element.querySelector('#event-start-time-1'),
         {
-          dateFormat: 'Y/m/d H:i',
+          dateFormat: 'd/m/y H:i',
           defaultDate: this._state.dateFrom,
           onChange: this.#dateFromChangeHandler, // На событие flatpickr передаём наш колбэк
         },
@@ -238,7 +238,7 @@ export default class AddEditView extends AbstractStatefulView {
       this.#datetopicker = flatpickr(
         this.element.querySelector('#event-end-time-1'),
         {
-          dateFormat: 'Y/m/d H:i',
+          dateFormat: 'd/m/y H:i',
           defaultDate: this._state.dateTo,
           onChange: this.#dateToChangeHandler, // На событие flatpickr передаём наш колбэк
         },
