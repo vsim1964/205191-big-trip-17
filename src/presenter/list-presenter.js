@@ -1,4 +1,4 @@
-import {render, RenderPosition} from '../framework/render.js';
+import {render, RenderPosition, remove} from '../framework/render.js';
 import EventsView from '../view/events-view.js';
 import SortView from '../view/sort-view.js';
 import ListView from '../view/list-view.js';
@@ -7,19 +7,20 @@ import PointPresenter from './point-presenter';
 import {sortTime, sortPrice} from '../mock/utils/util-sort';
 import {SortType} from '../mock/utils/util-sort';
 import {UpdateType, UserAction} from '../mock/utils/util-action_update';
-import {filter} from '../mock/utils/util-filter';
+import {filter, FilterType} from '../mock/utils/util-filter';
 
 export default class ListPresenter {
   #listContainer = null;
   #eventsComponent = new EventsView();
   #listComponent = new ListView();
   #sortComponent = null;
-  #emptyComponent = new EmptyView();
+  #emptyComponent = null;
   #pointModel = null;
   #filterModel = null;
   #listPoints = null;
   #pointPresenter = new Map();
   #currentSortType = SortType.DEFAULT;
+  #filterType = FilterType.EVERYTHING;
 
   constructor(listContainer, pointModel,  filterModel) {
     this.#listContainer = listContainer;
@@ -31,9 +32,9 @@ export default class ListPresenter {
   }
 
   get points() {
-    const filterType = this.#filterModel.filter;
     const points = this.#pointModel.tasks;
-    const filteredPoints = filter[filterType](points);
+    this.#filterType = this.#filterModel.filter;
+    const filteredPoints = filter[this.#filterType](points);
 
     switch (this.#currentSortType) {
       case SortType.TIME:
@@ -112,7 +113,10 @@ export default class ListPresenter {
     this.#pointPresenter.clear();
 
     remove(this.#sortComponent);
-    remove(this.#emptyComponent);
+
+    if (this.#emptyComponent) {
+      remove(this.#emptyComponent);
+    }
 
     if (resetSortType) {
       this.#currentSortType = SortType.DEFAULT;
@@ -134,6 +138,7 @@ export default class ListPresenter {
         this.#renderSort(this.#listPoints[i]);
       }
     } else {
+      this.#emptyComponent = new EmptyView(this.#filterType);
       render(this.#emptyComponent, this.#listComponent.element);
     }
   };
