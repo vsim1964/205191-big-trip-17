@@ -8,6 +8,7 @@ import {sortTime, sortPrice} from '../mock/utils/util-sort';
 import {SortType} from '../mock/utils/util-sort';
 import {UpdateType, UserAction} from '../mock/utils/util-action_update';
 import {filter, FilterType} from '../mock/utils/util-filter';
+import PointNewPresenter from '../presenter/point-new-presenter';
 
 export default class ListPresenter {
   #listContainer = null;
@@ -18,6 +19,7 @@ export default class ListPresenter {
   #pointModel = null;
   #filterModel = null;
   #listPoints = null;
+  #pointNewPresenter = null;
   #pointPresenter = new Map();
   #currentSortType = SortType.DEFAULT;
   #filterType = FilterType.EVERYTHING;
@@ -26,6 +28,8 @@ export default class ListPresenter {
     this.#listContainer = listContainer;
     this.#pointModel = pointModel;
     this.#filterModel = filterModel;
+
+    this.#pointNewPresenter = new PointNewPresenter(this.#listComponent.element, this.#handleViewAction);
 
     this.#pointModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
@@ -49,7 +53,14 @@ export default class ListPresenter {
     this.#renderList();
   };
 
+  createTask = (callback) => {
+    this.#currentSortType = SortType.DEFAULT;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
+    this.#pointNewPresenter.init(callback);
+  };
+
   #handleModeChange = () => {
+    this.#pointNewPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
   };
 
@@ -109,6 +120,7 @@ export default class ListPresenter {
   };
 
   #clearList = ({resetSortType = false}) => {
+    this.#pointNewPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
     this.#pointPresenter.clear();
 

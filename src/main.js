@@ -4,6 +4,7 @@ import ListPresenter from './presenter/list-presenter.js';
 import PointsModel from './model/points-model.js';
 import RouteView from './view/route-view.js';
 import FilterModel from './model/filter-model.js';
+import NewPointButton from '../view/new-point-button-view';
 
 const siteHeaderElement = document.querySelector('.page-header');
 const tripMain = siteHeaderElement.querySelector('.trip-main');
