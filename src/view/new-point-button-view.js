@@ -9,7 +9,7 @@ export default class NewPointButtonView extends AbstractView  {
     return createNewPointButtonTemplate();
   }
 
-  setEventHandler = (callback) => {
+  setClickHandler = (callback) => {
     this._callback.click = callback;
     this.element.addEventListener('click', this.#eventHandler);
   };

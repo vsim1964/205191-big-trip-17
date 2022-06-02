@@ -196,7 +196,7 @@ export default class AddEditView extends AbstractStatefulView {
 
   setDeleteClickHandler = (callback) => {
     this._callback.deleteClick = callback;
-    this.element.querySelector('.card__delete').addEventListener('click', this.#deleteClickHandler);
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#deleteClickHandler);
   };
 
   _restoreHandlers = () => {

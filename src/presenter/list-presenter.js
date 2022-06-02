@@ -36,7 +36,7 @@ export default class ListPresenter {
   }
 
   get points() {
-    const points = this.#pointModel.tasks;
+    const points = this.#pointModel.getPoints();
     this.#filterType = this.#filterModel.filter;
     const filteredPoints = filter[this.#filterType](points);
 
@@ -135,13 +135,11 @@ export default class ListPresenter {
     }
   };
 
-  #renderList = (listContainer, point) => {
-    this.#listContainer = listContainer;
-    this.#pointModel = point;
+  #renderList = () => {
     this.#listPoints = [...this.#pointModel.getPoints()];
 
     render(this.#eventsComponent, this.#listContainer);
-    this.#renderSort(this.#listPoints[i]);
+    this.#renderSort();
     render(this.#listComponent, this.#eventsComponent.element);
 
     if (this.#listPoints.length > 0) {

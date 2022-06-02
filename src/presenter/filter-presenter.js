@@ -21,7 +21,7 @@ export default class FilterPresenter {
   }
 
   get filters() {
-    const points = this.#pointModel.points;
+    const points = this.#pointModel.getPoints();
 
     return [
       {
@@ -47,7 +47,7 @@ export default class FilterPresenter {
     const prevFilterComponent = this.#filterComponent;
 
     this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
-    this.#filterComponent.TypeChangeHandler(this.#handleFilterTypeChange);
+    this.#filterComponent.setFilterTypeChangeHandler(this.#handleFilterTypeChange);
 
     if (prevFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
