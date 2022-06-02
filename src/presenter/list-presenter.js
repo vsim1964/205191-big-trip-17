@@ -145,7 +145,7 @@ export default class ListPresenter {
     if (this.#listPoints.length > 0) {
       for (let i = 0; i < this.#listPoints.length; i++) {
         this.#renderPoint(this.#listPoints[i]);
-        this.#renderSort(this.#listPoints[i]);
+        // this.#renderSort(this.#listPoints[i]);
       }
     } else {
       this.#emptyComponent = new EmptyView(this.#filterType);
