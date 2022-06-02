@@ -53,7 +53,7 @@ export default class ListPresenter {
     this.#renderList();
   };
 
-  createTask = (callback) => {
+  createPoint = (callback) => {
     this.#currentSortType = SortType.DEFAULT;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
     this.#pointNewPresenter.init(callback);

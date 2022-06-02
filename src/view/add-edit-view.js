@@ -258,7 +258,7 @@ export default class AddEditView extends AbstractStatefulView {
 
   #deleteClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.deleteClick(AddEditView.parseStateToTask(this._state));
+    this._callback.deleteClick(AddEditView.parseStateToPoint(this._state));
   };
 
   static parsePointToState = (point) => ({

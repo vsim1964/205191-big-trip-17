@@ -25,7 +25,7 @@ const handleNewPointFormClose = () => {
 };
 
 const handleNewPointButtonClick = () => {
-  list.createTask(handleNewPointFormClose);
+  list.createPoint(handleNewPointFormClose);
   newPointButtonComponent.element.disabled = true;
 };
 
